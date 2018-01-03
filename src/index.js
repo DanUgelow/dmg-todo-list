@@ -1,8 +1,9 @@
-class App extends React.Component {
-  render() {
-    return (
-      <div>Hello World!</div>
-    )
-  }
+const App = props => {
+  return (
+    <div>
+      Hello world!
+    </div>
+  )
 }
-ReactDOM.render(<App />, document.getElementById('root'))
+
+ReactDOM.render(<App/>, document.getElementById('root'))
