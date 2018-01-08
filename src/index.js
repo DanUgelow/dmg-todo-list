@@ -7,16 +7,38 @@ const InputContainer = (props) => {
   )
 }
 
+const ListContainer = props => {
+  const todoElements = props.todos.map((item, i, arr) => {
+    return (
+      <li key={i}>
+        { item.text }
+        <button>Edit</button>
+        <button>Complete</button>
+        <button>Delete</button>
+      </li>
+    )
+  })
+
+  console.log(todoElements)
+
+  return (
+    <ul>
+      { todoElements }
+    </ul>
+  )
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       inputText: '',
+      todosArray: [],
     }
 
     this.updateInputText = this.updateInputText.bind(this)
-    this.alertInputText = this.alertInputText.bind(this)
+    this.addTodo = this.addTodo.bind(this)
   }
 
   updateInputText(e) {
@@ -27,16 +49,25 @@ class App extends React.Component {
     })
   }
 
-  alertInputText(e) {
+  addTodo(e) {
     e.preventDefault()
 
-    alert(this.state.inputText)
+    const copyArray = [].concat(this.state.todosArray, [{ text: this.state.inputText }])
+
+    this.setState({
+      todosArray: copyArray,
+    }, () => {
+      this.setState({
+        inputText: '',
+      })
+    })
   }
 
   render() {
     return (
       <div>
-        <InputContainer handleChange={ this.updateInputText } handleSubmit={ this.alertInputText }/>
+        <InputContainer handleChange={ this.updateInputText } handleSubmit={ this.addTodo }/>
+        <ListContainer todos={ this.state.todosArray } />
       </div>
     )
   }
