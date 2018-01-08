@@ -1,7 +1,7 @@
 const InputContainer = (props) => {
   return (
     <form onSubmit={ props.handleSubmit }>
-      <input type="text" onChange={ props.handleChange }/>
+      <input type="text" onChange={ props.handleChange } value={props.inputText}/>
       <input type="submit" value="Submit"/>
     </form>
   )
@@ -18,8 +18,6 @@ const ListContainer = props => {
       </li>
     )
   })
-
-  console.log(todoElements)
 
   return (
     <ul>
@@ -55,18 +53,15 @@ class App extends React.Component {
     const copyArray = [].concat(this.state.todosArray, [{ text: this.state.inputText }])
 
     this.setState({
+      inputText: '',
       todosArray: copyArray,
-    }, () => {
-      this.setState({
-        inputText: '',
-      })
     })
   }
 
   render() {
     return (
       <div>
-        <InputContainer handleChange={ this.updateInputText } handleSubmit={ this.addTodo }/>
+        <InputContainer handleChange={ this.updateInputText } handleSubmit={ this.addTodo } inputText={this.state.inputText}/>
         <ListContainer todos={ this.state.todosArray } />
       </div>
     )
