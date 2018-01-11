@@ -11,7 +11,7 @@ const ListContainer = props => {
   const todoElements = props.todos.map((item, i, arr) => {
     return (
       <li key={i}>
-        { item.text }
+        <p>{ item.text }</p>
         <button>Edit</button>
         <button>Complete</button>
         <button>Delete</button>
