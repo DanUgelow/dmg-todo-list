@@ -64,7 +64,7 @@ class Todo extends React.Component {
       <li>
         <p className={ todo.complete ? 'complete' : '' }>{ this.state.text }</p>
         <button onClick={ editTodo(todo.id) }>Edit</button>
-        <button onClick={ completeTodo(todo.id) }>Complete</button>
+        <button onClick={ completeTodo(todo.id) }>{ todo.complete ? 'Incomplete' : 'Complete' }</button>
         <button onClick={ deleteTodo(todo.id) }>Delete</button>
       </li>
     )
@@ -162,7 +162,7 @@ class App extends React.Component {
     return e => {
       const todos = this.state.todos.map(todo => {
         if(id === todo.id) {
-          todo.complete = true
+          todo.complete = !todo.complete
         }
         return todo
       })
