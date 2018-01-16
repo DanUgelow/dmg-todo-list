@@ -1,3 +1,10 @@
+const createUniqueId = () => {
+  const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
+}
+
+
+
 const InputContainer = props => {
   return (
     <form onSubmit={ props.handleClick }>
@@ -11,10 +18,11 @@ const List = props => {
     return (
     <ul>
       {props.items.map((item, index, array) => {
-        return <li key={index}>
-                {item}
+        console.log(item);
+        return <li key={item.id}>
+                {item.text}
                 <button type="button">edit</button>
-                <button type="button" onClick={ props.handleDelete(index) }>delete</button>
+                <button type="button" onClick={ props.handleDelete(item.id) }>delete</button>
               </li>
       })}
     </ul>
@@ -43,24 +51,37 @@ class App extends React.Component {
 
   addToList(e) {
     e.preventDefault();
-    let newList = [].concat(this.state.listItems, [this.state.inputText]);
+
+    let newToDoItem = {
+      text: this.state.inputText,
+      id: createUniqueId(),
+      completed: false,
+    }
+
+    let newList = [].concat(this.state.listItems, [newToDoItem]);
 
     this.setState({
       listItems: newList,
-      inputText: ''
+      inputText: '',
     })
+
+    // const newTodo = createTodoObj()
+    // const newList = createNewTodoList(newTodo)
+    // updateList(newList)
   }
 
-  removeFromList(index) {
-    // return function(e) {
-      let updatedList = this.state.listItems;
-      console.log(updatedList);
-      console.log(e);
+  removeFromList(id) {
+    return e => {
+      let updatedList = this.state.listItems.filter(function(itemObj, index, arr) {
+        return itemObj.id !== id
+      });
+      // console.log(updatedList);
+      // console.log(e);
 
       this.setState({
         listItems: updatedList,
       })
-    // }
+    }
   }
 
   render() {
